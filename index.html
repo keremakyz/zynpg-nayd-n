@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günaydın Sevgilim ☀️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ferah, aydınlık ve canlı gündüz gökyüzü / güneş gradyanı */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #0284c7, #0369a1, #38bdf8, #bae6fd);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+            overflow-x: hidden;
+            padding: 20px 0;
+            transition: all 1s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Mesaj açıldığında arka planın geçeceği daha parlak, ışıltılı gündüz tonları */
+        body.active-bg {
+            background: linear-gradient(-45deg, #0369a1, #0284c7, #7dd3fc, #e0f2fe);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 40px 25px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(2, 132, 199, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            font-size: 75px;
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+            filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.6));
+        }
+
+        .toggle-btn:active {
+            transform: scale(0.85);
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            color: #b45309;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .message-box {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+            pointer-events: none;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .message-box.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            max-height: 1000px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.2rem;
+            background: linear-gradient(45deg, #d97706, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #334155;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .decor {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #d97706;
+            letter-spacing: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="hanimefendi.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <button class="toggle-btn" id="sunBtn" onclick="toggleMessage()">☀️</button>
+        <div class="hint" id="hintText">Güneşi doğurmak için dokun...</div>
+
+        <div class="message-box" id="messageBox">
+            <h1>Günaydın Canımın İçi!</h1>
+            <p>Gözlerimi açtığım ilk an aklımda sen, içimde kocaman bir heyecan var! Bugün de enerjinle ve o tatlı gülüşünle bütün günümü güzelleştireceğine eminim. Harika, neşeli ve bolca beni düşündüğün bir gün olsun sevgilim. Seni çok seviyorum! ☀️✨</p>
+            <div class="decor">✨ ☀️ 💛</div>
+        </div>
+    </div>
+
+    <script>
+        let isActivated = false;
+        const START_TIME_IN_SECONDS = 80;
+
+        function toggleMessage() {
+            const sunBtn = document.getElementById('sunBtn');
+            const hintText = document.getElementById('hintText');
+            const messageBox = document.getElementById('messageBox');
+            const music = document.getElementById('bgMusic');
+
+            if (!isActivated) {
+                document.body.classList.add('active-bg');
+                sunBtn.textContent = '🌻';
+                sunBtn.style.filter = 'drop-shadow(0 0 25px rgba(234, 179, 8, 0.8))';
+                hintText.textContent = 'Harika bir gün seninle olsun sevgilim!';
+                hintText.style.color = '#92400e';
+                messageBox.classList.add('active');
+
+                music.currentTime = START_TIME_IN_SECONDS;
+                music.play().catch(function(error) {
+                    console.log("Ses çalma hatası:", error);
+                });
+
+                isActivated = true;
+            } else {
+                document.body.classList.remove('active-bg');
+                sunBtn.textContent = '☀️';
+                sunBtn.style.filter = 'drop-shadow(0 0 20px rgba(234, 179, 8, 0.6))';
+                hintText.textContent = 'Güneşi doğurmak için dokun...';
+                hintText.style.color = '#b45309';
+                messageBox.classList.remove('active');
+
+                music.pause();
+                music.currentTime = 0;
+
+                isActivated = false;
+            }
+        }
+    </script>
+
+</body>
+</html>
